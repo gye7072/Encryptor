@@ -106,14 +106,28 @@ public class Encryptor
      *        (e.g. a method to decrypt each section of the decrypted message,
      *         similar to how encryptBlock was used)
      */
-    public String decryptMessage(String encryptedMessage)
-    {
+    public String decryptMessage(String encryptedMessage) {
         int count = 0;
         String str = "";
-            for(int j = 0; j < numCols; j++){
-                for(int i = 0; i < numRows; i++){
-                letterBlock[i][j] = encryptedMessage.substring(count, count+1);
+        double num = Math.ceil( (double) (encryptedMessage.length())/(numRows * numCols));
+        for(int l = 0; l < num; l++) {
+            for (int j = 0; j < numCols; j++) {
+                for (int i = 0; i < numRows; i++) {
+                    letterBlock[i][j] = encryptedMessage.substring(count, count + 1);
+                    count++;
+                }
+            }
+
+            for (int i2 = 0; i2 < numRows; i2++) {
+                for (int j2 = 0; j2 < numCols; j2++) {
+                    str += letterBlock[i2][j2];
+                }
             }
         }
+        while(str.charAt(str.length()-1) == ('A')){
+            str = str.substring(0,str.length()-1);
+        }
+
+        return str;
     }
 }
